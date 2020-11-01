@@ -2,40 +2,21 @@ import { stat } from 'fs';
 import React, {useReducer, useState, useRef, useEffect } from 'react'
 
 interface IState {
-    running: boolean,
-    lapse: number
+    running?: boolean,
+    lapse?: number
 }
 
-type Action = { type: 'LAPSE',now: number, startTime: number } | {
-    type: 'TOGGLE_RUNNING',
-} | { type: 'CLEAR' }
-
-
-function reducer (state: IState,action: Action): IState {
-      switch(action.type) {
-          case 'LAPSE':
-              return {...state, lapse: action.now - action.startTime}
-          case 'TOGGLE_RUNNING':
-              return {
-                  ...state,
-                  running: !state.running
-              }
-           case  'CLEAR': 
-             return {
-                 ...state,
-                 running: false,
-                 lapse: 0
-             }
-          default:
-              return state    
-      }
+function reducer (currentState: IState,newState: IState): IState {
+      return {...currentState,...newState}
 }
 
 
 const StopWatch = () => {
     
-    const [{ running, lapse }, dispatch] = useReducer(reducer, { running: false, lapse: 0});
+    const [{ running, lapse }, setState] = useReducer(reducer, { running: false, lapse: 0});
     
+     
+
     const setIntervalRef = useRef(null)
 
     useEffect(() => {
@@ -48,15 +29,15 @@ const StopWatch = () => {
         } else {
             const startTime = Date.now() - lapse
            setIntervalRef.current =  setInterval(() => {
-            dispatch({ type: 'LAPSE', now: Date.now(), startTime })
+            setState({ lapse: Date.now() - startTime})
             }, 0)
         }
-        dispatch({ type: 'TOGGLE_RUNNING'})
+        setState({ running: !running })
     }
 
     const handleClearClick = () => {
         clearInterval(setIntervalRef.current)
-        dispatch({type: 'CLEAR'})
+        setState({ lapse: 0, running: false})
     }
 
     return (
