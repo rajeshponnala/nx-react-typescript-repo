@@ -16,9 +16,17 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "accessToken": "YWU2ZDQzZWMtZWJjNi00Y2NjLTg3N2UtY2QzN2QyMjE2NWQ5fHJlYWQtd3JpdGU=",
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
@@ -28,7 +36,9 @@
     },
     "simplify-react-hooks-e2e": {
       "tags": [],
-      "implicitDependencies": ["simplify-react-hooks"]
+      "implicitDependencies": [
+        "simplify-react-hooks"
+      ]
     }
   }
 }
