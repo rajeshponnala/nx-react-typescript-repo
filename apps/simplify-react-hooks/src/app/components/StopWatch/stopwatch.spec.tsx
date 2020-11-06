@@ -11,7 +11,7 @@ describe('Counter', () => {
    })
  
 it('should render successfully', () => {
-    const { container, getByLabelText } = render(<StopWatch />);
+    const { getByLabelText } = render(<StopWatch />);
     expect(getByLabelText('0 ms')).toBeInTheDocument();
  });
 
